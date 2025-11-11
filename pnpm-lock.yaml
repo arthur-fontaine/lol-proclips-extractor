@@ -19,6 +19,9 @@ importers:
       mongodb:
         specifier: ^7.0.0
         version: 7.0.0
+      ollama:
+        specifier: ^0.6.2
+        version: 0.6.2
       p-limit:
         specifier: ^7.2.0
         version: 7.2.0
@@ -252,6 +255,9 @@ packages:
       socks:
         optional: true
 
+  ollama@0.6.2:
+    resolution: {integrity: sha512-VcPZpBuz3kdoJIcyWpiDS1MSDSZKyQPM6f9wi405vdLOB5yZWiQ+m7NSTrYsntQyCp/s/Yy0quKiYerhq7Liog==}
+
   p-limit@7.2.0:
     resolution: {integrity: sha512-ATHLtwoTNDloHRFFxFJdHnG6n2WUeFjaR8XQMFdKIv0xkXjrER8/iG9iu265jOM95zXHAfv9oTkqhrfbIzosrQ==}
     engines: {node: '>=20'}
@@ -287,6 +293,9 @@ packages:
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
+
+  whatwg-fetch@3.6.20:
+    resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
 
   whatwg-url@14.2.0:
     resolution: {integrity: sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==}
@@ -466,6 +475,10 @@ snapshots:
       bson: 7.0.0
       mongodb-connection-string-url: 7.0.0
 
+  ollama@0.6.2:
+    dependencies:
+      whatwg-fetch: 3.6.20
+
   p-limit@7.2.0:
     dependencies:
       yocto-queue: 1.2.1
@@ -491,6 +504,8 @@ snapshots:
   undici-types@7.16.0: {}
 
   webidl-conversions@7.0.0: {}
+
+  whatwg-fetch@3.6.20: {}
 
   whatwg-url@14.2.0:
     dependencies:

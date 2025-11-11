@@ -1,6 +1,7 @@
 {
 	"conventionalCommits.scopes": [
 		"Database",
-		"DatabaseFeeder"
+		"DatabaseFeeder",
+		"VodCalibrator"
 	]
 }
