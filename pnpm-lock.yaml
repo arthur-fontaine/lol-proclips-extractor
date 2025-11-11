@@ -16,6 +16,9 @@ importers:
       '@viriato/lol-esports-api':
         specifier: ^0.6.0
         version: 0.6.0(patch_hash=f99608e16a37c67796a4687f2b9690707ee966b4c51e38194db65078e16a2b16)
+      fluent-ffmpeg:
+        specifier: ^2.1.3
+        version: 2.1.3
       mongodb:
         specifier: ^7.0.0
         version: 7.0.0
@@ -28,6 +31,9 @@ importers:
       papr:
         specifier: ^15.2.2
         version: 15.2.2(mongodb@7.0.0)
+      ytdlp-nodejs:
+        specifier: ^2.3.5
+        version: 2.3.5
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.4
@@ -41,6 +47,9 @@ importers:
       '@tsconfig/strictest':
         specifier: ^2.0.7
         version: 2.0.7
+      '@types/fluent-ffmpeg':
+        specifier: ^2.1.28
+        version: 2.1.28
       '@types/node':
         specifier: ^24.10.0
         version: 24.10.0
@@ -115,6 +124,9 @@ packages:
   '@tsconfig/strictest@2.0.7':
     resolution: {integrity: sha512-lG1bXQloBVvQXasPBZSBaWbs7GNW4txZMYs7XMUVzM0s4seCbJACYBPFIRpGNVD3gC8gndK00AZON1uBrJt4Fw==}
 
+  '@types/fluent-ffmpeg@2.1.28':
+    resolution: {integrity: sha512-5ovxsDwBcPfJ+eYs1I/ZpcYCnkce7pvH9AHSvrZllAp1ZPpTRDZAFjF3TRFbukxSgIYTTNYePbS0rKUmaxVbXw==}
+
   '@types/node@24.10.0':
     resolution: {integrity: sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==}
 
@@ -126,6 +138,9 @@ packages:
 
   '@viriato/lol-esports-api@0.6.0':
     resolution: {integrity: sha512-WLjA21tEbwX5C8r4LtNce2NZyeisLnEtwFIj6YjBRwMrHtJA+5LQZB39+NN9KIpTMfrb0Rq5Ocjp+kTCYTZjkg==}
+
+  async@0.2.10:
+    resolution: {integrity: sha512-eAkdoKxU6/LkKDBzLpT+t6Ff5EtfSF4wx1WfJiPEEV7WNLnDaRXk0oVysiEPm262roaachGexwUv94WhSgN5TQ==}
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
@@ -169,6 +184,11 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
+  fluent-ffmpeg@2.1.3:
+    resolution: {integrity: sha512-Be3narBNt2s6bsaqP6Jzq91heDgOEaDCJAXcE3qcma/EJBSy5FB4cvO31XBInuAuKBx8Kptf8dkhjK0IOru39Q==}
+    engines: {node: '>=18'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
     engines: {node: '>=4.0'}
@@ -208,6 +228,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  isexe@2.0.0:
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -301,9 +324,18 @@ packages:
     resolution: {integrity: sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==}
     engines: {node: '>=18'}
 
+  which@1.3.1:
+    resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
+    hasBin: true
+
   yocto-queue@1.2.1:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
+
+  ytdlp-nodejs@2.3.5:
+    resolution: {integrity: sha512-7V08DRv8C1K0HxJFvRoaoLYFS/reJ9VJBlaMVhEvdi2IsYK/9Hae1Mah65Y+bhk3RAmx7G9eTfpOhkj3bp0Zbw==}
+    engines: {node: '>=16.0.0'}
+    hasBin: true
 
 snapshots:
 
@@ -352,6 +384,10 @@ snapshots:
 
   '@tsconfig/strictest@2.0.7': {}
 
+  '@types/fluent-ffmpeg@2.1.28':
+    dependencies:
+      '@types/node': 24.10.0
+
   '@types/node@24.10.0':
     dependencies:
       undici-types: 7.16.0
@@ -367,6 +403,8 @@ snapshots:
       axios: 1.13.2
     transitivePeerDependencies:
       - debug
+
+  async@0.2.10: {}
 
   asynckit@0.4.0: {}
 
@@ -412,6 +450,11 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
+  fluent-ffmpeg@2.1.3:
+    dependencies:
+      async: 0.2.10
+      which: 1.3.1
+
   follow-redirects@1.15.11: {}
 
   form-data@4.0.4:
@@ -453,6 +496,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  isexe@2.0.0: {}
 
   math-intrinsics@1.1.0: {}
 
@@ -512,4 +557,10 @@ snapshots:
       tr46: 5.1.1
       webidl-conversions: 7.0.0
 
+  which@1.3.1:
+    dependencies:
+      isexe: 2.0.0
+
   yocto-queue@1.2.1: {}
+
+  ytdlp-nodejs@2.3.5: {}
