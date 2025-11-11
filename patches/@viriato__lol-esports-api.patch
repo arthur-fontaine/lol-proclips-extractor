@@ -1,0 +1,42 @@
+diff --git a/types/interfaces/games.d.ts b/types/interfaces/games.d.ts
+index d7b5505c22b2d61715f56437fde81f2149c31b1b..1fd6ddd5ee367be83bb4611d918a0ea6b19753d7 100644
+--- a/types/interfaces/games.d.ts
++++ b/types/interfaces/games.d.ts
+@@ -55,33 +55,21 @@ export default class Games extends Interface {
+                 esportsTeamId: string;
+                 participantMetadata: ({
+                     participantId: 1 | 3 | 5 | 2 | 4 | 6 | 7 | 8 | 9 | 10;
++                    esportsPlayerId: string;
+                     summonerName: string;
+                     championId: string;
+                     role: "top" | "jungle" | "mid" | "bottom" | "support";
+-                } | ({
+-                    participantId: 1 | 3 | 5 | 2 | 4 | 6 | 7 | 8 | 9 | 10;
+-                    summonerName: string;
+-                    championId: string;
+-                    role: "top" | "jungle" | "mid" | "bottom" | "support";
+-                } & {
+-                    esportsPlayerId: string;
+-                }))[];
++                })[];
+             };
+             redTeamMetadata: {
+                 esportsTeamId: string;
+                 participantMetadata: ({
+                     participantId: 1 | 3 | 5 | 2 | 4 | 6 | 7 | 8 | 9 | 10;
++                    esportsPlayerId: string;
+                     summonerName: string;
+                     championId: string;
+                     role: "top" | "jungle" | "mid" | "bottom" | "support";
+-                } | ({
+-                    participantId: 1 | 3 | 5 | 2 | 4 | 6 | 7 | 8 | 9 | 10;
+-                    summonerName: string;
+-                    championId: string;
+-                    role: "top" | "jungle" | "mid" | "bottom" | "support";
+-                } & {
+-                    esportsPlayerId: string;
+-                }))[];
++                })[];
+             };
+         };
+         frames: ({

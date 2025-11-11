@@ -9,7 +9,8 @@
 		"lint:fix": "biome lint --write",
 		"format": "biome format",
 		"format:fix": "biome format --write",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"feed-database": "node --env-file=.env ./src/database-feeder/databaseFeeder.ts"
 	},
 	"keywords": [],
 	"author": "",
@@ -24,7 +25,9 @@
 		"typescript": "^5.9.3"
 	},
 	"dependencies": {
+		"@viriato/lol-esports-api": "^0.6.0",
 		"mongodb": "^7.0.0",
+		"p-limit": "^7.2.0",
 		"papr": "^15.2.2"
 	}
 }

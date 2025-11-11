@@ -1,0 +1,2 @@
+patchedDependencies:
+  '@viriato/lol-esports-api': patches/@viriato__lol-esports-api.patch

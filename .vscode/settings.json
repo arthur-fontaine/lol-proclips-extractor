@@ -1,3 +1,6 @@
 {
-	"conventionalCommits.scopes": ["Database"]
+	"conventionalCommits.scopes": [
+		"Database",
+		"DatabaseFeeder"
+	]
 }
