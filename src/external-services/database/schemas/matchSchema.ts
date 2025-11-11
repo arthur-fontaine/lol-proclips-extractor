@@ -26,8 +26,8 @@ export const matchSchema = schema({
 			vods: types.array(types.oneOf([types.object({
 				youTubeId: types.string({ required: true }),
 				lang: types.string({ required: false }),
-				startMillis: types.number({ required: false }),
-				endMillis: types.number({ required: false }),
+				startTimestamp: types.number({ required: false }),
+				endTimestamp: types.number({ required: false }),
 			})]), { required: true }),
 		}),
 		{ required: true },

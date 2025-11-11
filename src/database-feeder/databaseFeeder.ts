@@ -85,6 +85,8 @@ async function processEvent(event: InferAsyncGenerator<typeof iterateLeagueEvent
                 vods: enhancedGame.vods.map((vod) => vod.provider === 'youtube' ? {
                   youTubeId: vod.parameter,
                   lang: vod.locale,
+                  startTimestamp: vod.startMillis,
+                  endTimestamp: vod.endMillis,
                 } : undefined).filter(v => v !== undefined),
                 events: events
                   .map((e) => {

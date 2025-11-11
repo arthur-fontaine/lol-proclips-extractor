@@ -40,3 +40,16 @@ index d7b5505c22b2d61715f56437fde81f2149c31b1b..1fd6ddd5ee367be83bb4611d918a0ea6
              };
          };
          frames: ({
+diff --git a/types/interfaces/matches.d.ts b/types/interfaces/matches.d.ts
+index c2204b16a62666f9bb92e569ac0059c929def369..de4f7bc8df65ded8609650154b1ab47d7ba65210 100644
+--- a/types/interfaces/matches.d.ts
++++ b/types/interfaces/matches.d.ts
+@@ -47,6 +47,8 @@ export default class Matches extends Interface {
+                             locale: "en-US" | "en-GB" | "en-AU" | "cs-CZ" | "de-DE" | "el-GR" | "es-ES" | "es-MX" | "fr-FR" | "hu-HU" | "it-IT" | "pl-PL" | "pt-BR" | "ro-RO" | "ru-RU" | "tr-TR" | "ja-JP" | "ko-KR";
+                             provider: "youtube" | "twitch";
+                             offset: number;
++                            startMillis?: number;
++                            endMillis?: number;
+                         })[];
+                     } & {
+                         teams: {

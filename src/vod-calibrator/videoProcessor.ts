@@ -13,12 +13,12 @@ export async function extractFrames(videoPath: string, vod: Match['games'][numbe
     fs.mkdirSync(outputFramesDir);
   }
 
-  if (!vod.startMillis || !vod.endMillis) {
-    throw new Error('VOD must have startMillis and endMillis defined to extract frames.');
+  if (!vod.startTimestamp || !vod.endTimestamp) {
+    throw new Error('VOD must have startTimestamp and endTimestamp defined to extract frames.');
   }
 
-  const startTime = vod.startMillis / 1000 + 5 * 60; // Start time in seconds + 5 minutes to skip draft and intro
-  const endTime = vod.endMillis / 1000;
+  const startTime = vod.startTimestamp / 1000 + 5 * 60; // Start time in seconds + 5 minutes to skip draft and intro
+  const endTime = vod.endTimestamp / 1000;
   const duration = endTime - startTime;
   const interval = duration / framesCount;
 
