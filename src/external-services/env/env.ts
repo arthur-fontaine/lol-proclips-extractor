@@ -1,15 +1,14 @@
 interface Env {
-	dbFileName: string;
+	dbName: string;
+	mongoUrl: string;
 }
 
-export const env = getEnv();
+export const env = await getEnv();
 
-function getEnv(): Env {
+async function getEnv(): Promise<Env> {
 	return {
-		dbFileName: getVar(
-			"DB_FILE_NAME",
-			true,
-		),
+		dbName: getVar("DB_NAME", true),
+		mongoUrl: getVar("MONGO_URL", true),
 	};
 }
 

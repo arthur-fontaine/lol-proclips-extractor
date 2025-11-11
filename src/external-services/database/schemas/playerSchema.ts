@@ -1,6 +1,13 @@
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { schema, types } from "papr";
 
-export const playerTable = sqliteTable("players", {
-  id: int().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
+export const playerSchema = schema({
+	summonerName: types.string({ required: true }),
+	externalIds: types.object(
+		{
+			leagueOfLegends: types.string({ required: true }),
+		},
+		{ required: true },
+	),
 });
+
+export type Player = (typeof playerSchema)[0];
