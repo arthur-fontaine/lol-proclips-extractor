@@ -21,7 +21,12 @@ export const matchSchema = schema({
 					type: types.enum(["kill", "death", "assist"], { required: true }),
 					playerId: types.objectId({ required: true }),
 				}),
+				{ required: true },
 			),
+			vods: types.array(types.oneOf([types.object({
+				youTubeId: types.string({ required: true }),
+				lang: types.string({ required: false }),
+			})]), { required: true }),
 		}),
 		{ required: true },
 	),
