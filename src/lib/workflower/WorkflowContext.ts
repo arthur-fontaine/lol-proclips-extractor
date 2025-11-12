@@ -1,15 +1,40 @@
 import pLimit, { type LimitFunction } from "p-limit";
 import type { AvailableSteps } from "./utils/AvailableSteps.ts";
 import type { InferEngineSteps, WorkflowEngine } from "./WorkflowEngine.ts";
-import { type AnyWorkflowStep, type InferWorkflowStepInput, type InferWorkflowStepOutput, type WorkflowStep } from "./WorkflowStep.ts";
+import { type AnyWorkflowStep, type InferWorkflowStepInput, type WorkflowStep } from "./WorkflowStep.ts";
 
 export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
   private engine: WorkflowEngine<STEPS>;
   // private valueHistory = new Map<AnyWorkflowStep, unknown[]>();
   private stepLimits = new Map<AnyWorkflowStep, LimitFunction>();
+  private totalCompleted = new Map<AnyWorkflowStep, number>();
 
   constructor(engine: WorkflowEngine<STEPS>) {
     this.engine = engine;
+
+    setInterval(() => {
+      console.log(`--- ${new Date().toISOString()} ---`);
+
+      const rows: { Step: string; Waiting: number; Active: number; Completed: number; Percent: string }[] = [];
+
+      for (const [step, limit] of this.stepLimits) {
+        const completed = this.totalCompleted.get(step) || 0;
+        const pending = (limit as any).pendingCount || 0;
+        const active = (limit as any).activeCount || 0;
+        const total = completed + active + pending;
+        const percent = total === 0 ? "0.00%" : `${((completed / total) * 100).toFixed(2)}%`;
+
+        rows.push({
+          Step: step?.constructor?.name ?? "unknown",
+          Waiting: pending,
+          Active: active,
+          Completed: completed,
+          Percent: percent,
+        });
+      }
+
+      console.table(rows);
+    }, 1000);
   }
 
   private getStepLimit(step: AnyWorkflowStep): LimitFunction {
@@ -24,7 +49,6 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
   }
 
   private async run<STEP extends AvailableSteps<STEPS>>(step: STEP, input: InferWorkflowStepInput<STEP>) {
-    console.log(`Running step: ${step.constructor.name}`);
     const thens = this.engine.flows.get(step) || [];
 
     let expected = 0;
@@ -43,6 +67,9 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
     while (completed < expected) {
       await new Promise(resolve => setTimeout(resolve, 50));
     }
+
+    const total = this.totalCompleted.get(step) || 0;
+    this.totalCompleted.set(step, total + 1);
   }
 }
 
