@@ -2,6 +2,7 @@
 	"conventionalCommits.scopes": [
 		"Database",
 		"DatabaseFeeder",
-		"VodCalibrator"
+		"VodCalibrator",
+		"Workflower"
 	]
 }
