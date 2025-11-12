@@ -1,10 +1,10 @@
 import { createWorkflowEngine } from "../lib/workflower/WorkflowEngine.ts";
-import { FETCH_EVENT_GAMES } from "./steps/FETCH_EVENT_GAMES.ts";
-import { FETCH_GAME } from "./steps/FETCH_GAME.ts";
-import { FETCH_GAME_DETAILS } from "./steps/FETCH_GAME_DETAILS.ts";
-import { FETCH_LEAGUE_EVENTS } from "./steps/FETCH_LEAGUE_EVENTS.ts";
-import { FETCH_LEAGUES } from "./steps/FETCH_LEAGUES.ts";
-import { FILTER_BY_PLAYER } from "./steps/FILTER_PLAYER.ts";
+import { FETCH_EVENT_GAMES } from "./steps/03_FETCH_EVENT_GAMES.ts";
+import { FETCH_GAME } from "./steps/04_FETCH_GAME.ts";
+import { FETCH_GAME_DETAILS } from "./steps/06_FETCH_GAME_DETAILS.ts";
+import { FETCH_LEAGUE_EVENTS } from "./steps/02_FETCH_LEAGUE_EVENTS.ts";
+import { FETCH_LEAGUES } from "./steps/01_FETCH_LEAGUES.ts";
+import { FILTER_BY_PLAYER } from "./steps/05_FILTER_PLAYER.ts";
 
 const engine = createWorkflowEngine(100)
   .addStep(FETCH_LEAGUES, [FETCH_LEAGUE_EVENTS])
