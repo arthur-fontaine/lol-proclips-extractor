@@ -3,6 +3,7 @@ import Papr from "papr";
 import { env } from "../env/env.ts";
 import { matchSchema } from "./schemas/matchSchema.ts";
 import { playerSchema } from "./schemas/playerSchema.ts";
+import { vodCalibrationSchema } from "./schemas/vodCalibrationSchema.ts";
 
 export class Database implements AsyncDisposable {
 	private dbName: string;
@@ -24,10 +25,12 @@ export class Database implements AsyncDisposable {
 	private loadModels() {
 		const Match = this.papr.model("matches", matchSchema);
 		const Player = this.papr.model("players", playerSchema);
+		const VodCalibration = this.papr.model("vodCalibrations", vodCalibrationSchema);
 
 		return {
 			Match,
 			Player,
+			VodCalibration,
 		};
 	}
 

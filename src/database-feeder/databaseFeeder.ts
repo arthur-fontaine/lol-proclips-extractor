@@ -153,7 +153,7 @@ function formatSummonerName(summonerName: string): string {
 
   const leagues = await Array.fromAsync(iterateLeagues());
   leagues.sort((a, b) => {
-    const priority = ["lck_challengers_league", "lck"];
+    const priority = ["lck_challengers_league", "lck", "lec", "lfl"];
     const ia = priority.indexOf(a.slug);
     const ib = priority.indexOf(b.slug);
     if (ia !== -1 || ib !== -1) {

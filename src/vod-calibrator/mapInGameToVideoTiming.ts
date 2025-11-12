@@ -1,32 +1,45 @@
-import type { Match } from '../external-services/database/schemas/matchSchema.ts';
-import { downloadVideo } from './videoDownloader.ts';
-import { extractFrames, processFrames } from './videoProcessor.ts';
+import type { ObjectId } from "mongodb";
+import { database } from "../external-services/database/database.ts";
+import type { VodCalibration } from "../external-services/database/schemas/vodCalibrationSchema.ts";
 
-async function mapInGameToVideoTiming(vod: Match['games'][number]['vods'][number]) {
-  const videoPath = await downloadVideo(vod.youTubeId);
-  const frames = await extractFrames(videoPath, vod);
-  const gameTimers = await processFrames(frames.map(f => f.path));
-
-  return (gameSeconds: number): number | null => {
-    let closestGameTimerIndex = gameTimers.findIndex(gt => gt !== null && gameSeconds >= gt);
-    if (closestGameTimerIndex === -1) closestGameTimerIndex = 0;
-
-    const diff = gameSeconds - gameTimers[closestGameTimerIndex]!;
-    const frame = frames[closestGameTimerIndex]!;
-
-    console.log(`Mapping game time ${gameSeconds} to video time using frame at index ${closestGameTimerIndex} with game timer ${gameTimers[closestGameTimerIndex]} and diff ${diff}`);
-
-    return frame.timestamp + diff;
+async function mapInGameToVideoTiming({ matchId, gameNumber }: { matchId: ObjectId; gameNumber: number; }) {
+  const calibration = (await database.models.VodCalibration.findOne({
+    matchId,
+    gameNumber,
+  }));
+  if (!calibration) {
+    throw new Error(`No calibration data found for game ${matchId.toHexString()} number ${gameNumber}. Run preprocessGameVods before mapping.`);
   }
+
+  const points = [...calibration.calibrationPoints].sort((a, b) => a.gameSeconds - b.gameSeconds);
+  if (points.length === 0) {
+    console.warn(`Calibration data for game ${matchId.toHexString()} number ${gameNumber} has no points.`);
+    return () => null;
+  }
+
+  const mapTime = (gameSeconds: number): number | null => {
+    const anchorIndex = findCalibrationIndex(points, gameSeconds);
+    const anchor = points[anchorIndex];
+    if (!anchor) {
+      return null;
+    }
+
+    const diff = gameSeconds - anchor.gameSeconds;
+    const videoTimestamp = anchor.videoTimestampSeconds + diff;
+
+    console.log(
+      `Mapping game time ${gameSeconds}s to video timestamp ${videoTimestamp}s using anchor point at game time ${anchor.gameSeconds}s and video timestamp ${anchor.videoTimestampSeconds}s.`,
+    );
+
+    return videoTimestamp;
+  };
+
+  return { mapTime, youtubeId: calibration.vod.youTubeId };
 }
 
-// const fn = await mapInGameToVideoTiming({
-//   youTubeId: 'qw7VAui52JY',
-//   startMillis: 18180000,
-//   endMillis: 20340000,
-// })
-// console.log(fn(0))
-// console.log(fn(300))
-// console.log(fn(1050))
+function findCalibrationIndex(points: VodCalibration["calibrationPoints"], gameSeconds: number) {
+  const index = points.findIndex((point) => gameSeconds >= point.gameSeconds);
+  return index === -1 ? 0 : index;
+}
 
 export { mapInGameToVideoTiming };
