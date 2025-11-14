@@ -1,6 +1,11 @@
 import type { WorkflowContext } from "./WorkflowContext.ts";
 
 export abstract class WorkflowStep<INPUT, OUTPUT, CTX extends WorkflowContext<AnyWorkflowStep[]>> {
+  config?: {
+    concurrency?: number;
+    hideLogging?: boolean;
+  } | undefined;
+
   abstract execute(input: INPUT, ctx: CTX): AsyncGenerator<OUTPUT>;
 }
 
@@ -10,6 +15,7 @@ export type InferWorkflowStepOutput<STEP extends AnyWorkflowStep> = STEP extends
 
 export function createWorkflowStep<INPUT = undefined, OUTPUT = unknown, CTX extends WorkflowContext<AnyWorkflowStep[]> = WorkflowContext<AnyWorkflowStep[]>>(impl: WorkflowStep<INPUT, OUTPUT, CTX> & { name?: string }) {
   const cl = class extends WorkflowStep<INPUT, OUTPUT, CTX> {
+    override config = impl.config;
     async *execute(input: INPUT, ctx: CTX): AsyncGenerator<OUTPUT> {
       yield* impl.execute(input, ctx);
     }

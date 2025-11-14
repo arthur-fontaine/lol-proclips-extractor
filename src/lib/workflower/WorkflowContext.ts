@@ -1,7 +1,7 @@
 import pLimit, { type LimitFunction } from "p-limit";
 import type { AvailableSteps } from "./utils/AvailableSteps.ts";
 import type { InferEngineSteps, WorkflowEngine } from "./WorkflowEngine.ts";
-import { type AnyWorkflowStep, type InferWorkflowStepInput, type WorkflowStep } from "./WorkflowStep.ts";
+import type { AnyWorkflowStep, InferWorkflowStepInput, WorkflowStep } from "./WorkflowStep.ts";
 
 export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
   private engine: WorkflowEngine<STEPS>;
@@ -18,6 +18,8 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
       const rows: { Step: string; Waiting: number; Active: number; Completed: number; Percent: string }[] = [];
 
       for (const [step, limit] of this.stepLimits) {
+        if (step.config?.hideLogging) continue;
+
         const completed = this.totalCompleted.get(step) || 0;
         const pending = (limit as any).pendingCount || 0;
         const active = (limit as any).activeCount || 0;
@@ -41,7 +43,8 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
     let limit = this.stepLimits.get(step);
     if (!limit) {
       // @ts-expect-error `concurrency` is private
-      const concurrency = this.engine.concurrency;
+      const engineConcurrency = this.engine.concurrency;
+      const concurrency = step.config?.concurrency ?? engineConcurrency;
       limit = typeof concurrency === 'number' ? pLimit(concurrency) : concurrency;
       this.stepLimits.set(step, limit);
     }
