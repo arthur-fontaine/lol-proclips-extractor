@@ -22,11 +22,11 @@ export class WorkflowEngine<const STEPS extends AnyWorkflowStep[] = []> {
     return this as unknown as WorkflowEngine<[...STEPS, NEW_STEP]>;
   }
 
-  run<STEP extends AvailableSteps<STEPS>>(step: STEP, input: InferWorkflowStepInput<STEP>) {
+  async run<STEP extends AvailableSteps<STEPS>>(step: STEP, input: InferWorkflowStepInput<STEP>) {
     const context = new WorkflowContext(this);
     // @ts-expect-error `run` is private
     const run = context.run.bind(context);
-    return run(step, input);
+    return await run(step, input);
   }
 }
 

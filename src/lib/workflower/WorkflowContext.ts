@@ -73,6 +73,16 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
 
     const total = this.totalCompleted.get(step) || 0;
     this.totalCompleted.set(step, total + 1);
+
+    // biome-ignore lint/suspicious/noAsyncPromiseExecutor: <explanation>
+    return new Promise<void>(async (resolve) => {
+      // Wait for all tasks to complete
+      while (completed < expected) {
+        await new Promise(resolve => setImmediate(resolve));
+      }
+
+      resolve();
+    });
   }
 }
 
