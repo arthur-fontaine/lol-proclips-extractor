@@ -1,17 +1,20 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import pLimit, { type LimitFunction } from "p-limit";
 import type { AvailableSteps } from "./utils/AvailableSteps.ts";
 import type { InferEngineSteps, WorkflowEngine } from "./WorkflowEngine.ts";
-import type { AnyWorkflowStep, InferWorkflowStepInput, WorkflowStep } from "./WorkflowStep.ts";
+import type { AnyWorkflowStep, InferWorkflowStepInput, InferWorkflowStepOutput, WorkflowStep } from "./WorkflowStep.ts";
 
 export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
   private engine: WorkflowEngine<STEPS>;
-  // private valueHistory = new Map<AnyWorkflowStep, unknown[]>();
+  private historyStorage = new Map<AnyWorkflowStep, unknown[]>();
   private stepLimits = new Map<AnyWorkflowStep, LimitFunction>();
   private totalCompleted = new Map<AnyWorkflowStep, number>();
 
   constructor(engine: WorkflowEngine<STEPS>) {
     this.engine = engine;
+  }
 
+  private startLogging(interval: number = 1000) {
     setInterval(() => {
       console.log(`--- ${new Date().toISOString()} ---`);
 
@@ -36,7 +39,7 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
       }
 
       console.table(rows);
-    }, 1000);
+    }, interval);
   }
 
   private getStepLimit(step: AnyWorkflowStep): LimitFunction {
@@ -57,12 +60,11 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
     let expected = 0;
     let completed = 0;
     for await (const output of step.execute(input, this as never)) {
+      const that = this.withHistory(step, output);
       for (const then of thens) {
         expected++;
-        const limit = this.getStepLimit(then);
-        limit(() => this.run(then, output)).finally(() => {
-          completed++;
-        });
+        const limit = that.getStepLimit(then);
+        limit(() => that.run(then, output)).finally(() => completed++);
       }
     }
 
@@ -84,11 +86,19 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
       resolve();
     });
   }
-}
 
-export const createWorkflowContext = <ENGINE extends WorkflowEngine<any[]>>() => {
-  return {
-    new: (engine: ENGINE) => new WorkflowContext(engine),
-    step: <INPUT = undefined, OUTPUT = unknown>(impl: WorkflowStep<INPUT, OUTPUT, WorkflowContext<InferEngineSteps<ENGINE>>>) => { }
-  };
+  private withHistory<STEP extends AnyWorkflowStep, OUTPUT>(step: STEP, output: OUTPUT) {
+    const history = new Map(this.historyStorage);
+    const stepHistory = history.get(step) || [];
+    stepHistory.push(output);
+    history.set(step, stepHistory);
+    const ctx = new WorkflowContext<STEPS>(this.engine);
+    Object.assign(ctx, this);
+    ctx.historyStorage = history;
+    return ctx;
+  }
+
+  getHistory<STEP extends AvailableSteps<STEPS>>(step: STEP): InferWorkflowStepOutput<STEP>[] {
+    return (this.historyStorage.get(step) || []) as InferWorkflowStepOutput<STEP>[];
+  }
 }

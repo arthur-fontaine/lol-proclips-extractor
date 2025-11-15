@@ -1,10 +1,14 @@
 import { createWorkflowStep } from "../../lib/workflower/workflower.ts";
-import type { IAggregatedGame } from "../types/IAggregatedGame.ts";
+import type { IGame } from "../types/IGame.ts";
 import { formatSummonerName } from "../utils/formatSummonerName.ts";
+import { FETCH_GAME } from "./04_FETCH_GAME.ts";
 
-export const FILTER_BY_PLAYER = createWorkflowStep({
-  name: "FILTER_BY_PLAYER",
-  async *execute({ game }: { game: IAggregatedGame }) {
+export const FILTER_GAME_BY_PLAYER = createWorkflowStep({
+  name: "FILTER_GAME_BY_PLAYER",
+  async *execute({ game }: { game: IGame.With<IGame.Aggregated> }, ctx) {
+    if (ctx.getHistory(FETCH_GAME).length !== 1) // Runtime testing
+      throw new Error("Expected exactly one game from FETCH_GAME step.");
+
     const participants = [
       ...game.gameMetadata?.blueTeamMetadata.participantMetadata || [],
       ...game.gameMetadata?.redTeamMetadata.participantMetadata || [],
