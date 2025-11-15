@@ -1,7 +1,7 @@
 interface Env {
 	dbName: string;
 	mongoUrl: string;
-	ollamaApiUrl: string;
+	geminiApiKey: string;
 }
 
 export const env = await getEnv();
@@ -10,7 +10,7 @@ async function getEnv(): Promise<Env> {
 	return {
 		dbName: getVar("DB_NAME", true),
 		mongoUrl: getVar("MONGO_URL", true),
-		ollamaApiUrl: getVar("OLLAMA_API_URL", true),
+		geminiApiKey: getVar("GEMINI_API_KEY", true),
 	};
 }
 

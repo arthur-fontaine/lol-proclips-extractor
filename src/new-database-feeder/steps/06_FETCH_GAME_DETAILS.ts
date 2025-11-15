@@ -5,9 +5,9 @@ import type { IGameDetails } from "../types/IGameDetails.ts";
 
 export const FETCH_GAME_DETAILS = createWorkflowStep({
   name: "FETCH_GAME_DETAILS",
-  async *execute({ game }: { game: IGame }) {
+  async *execute({ game }: { game: IGame.With<IGame.Aggregated> }) {
     const details = await fetchGameDetails(game);
-    yield { ...game, details };
+    yield { game: { ...game, details } };
   },
 })
 

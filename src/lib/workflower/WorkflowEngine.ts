@@ -24,9 +24,8 @@ export class WorkflowEngine<const STEPS extends AnyWorkflowStep[] = []> {
 
   async run<STEP extends AvailableSteps<STEPS>>(step: STEP, input: InferWorkflowStepInput<STEP>) {
     const context = new WorkflowContext(this);
-    // @ts-expect-error `run` is private
-    const run = context.run.bind(context);
-    return await run(step, input);
+    context['startLogging']();
+    return await context['run'](step, input);
   }
 }
 
