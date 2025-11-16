@@ -7,7 +7,6 @@ export const FETCH_GAME = createWorkflowStep({
   async *execute({ game }: { game: IGame }) {
     const window = await fetchGameWindow(game);
     const firstFrame = await fetchFirstGameFrame(game);
-    window?.gameMetadata
     yield { game: { ...game, ...window, firstFrame } };
   },
 })

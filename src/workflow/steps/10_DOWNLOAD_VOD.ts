@@ -1,8 +1,9 @@
+import fs from "node:fs";
 import path from "node:path";
 import { YtDlp } from "ytdlp-nodejs";
 import { createWorkflowStep } from "../../lib/workflower/workflower.ts";
-import { FETCH_GAME } from "./05_FETCH_GAME.ts";
 import type { IVod } from "../types/IVod.ts";
+import { FETCH_GAME } from "./05_FETCH_GAME.ts";
 
 const downloadPromises = new Map<string, Promise<string>>();
 
@@ -15,6 +16,11 @@ export const DOWNLOAD_VOD = createWorkflowStep({
     if (vod.provider === 'youtube') {
       const youTubeId = vod.parameter;
       const downloadedVodPath = path.resolve(`./videos/${youTubeId}.webm`);
+
+      if (fs.existsSync(downloadedVodPath)) {
+        yield { vod: { ...vod, localPath: downloadedVodPath } };
+        return;
+      }
 
       if (downloadPromises.has(youTubeId)) {
         await downloadPromises.get(youTubeId);

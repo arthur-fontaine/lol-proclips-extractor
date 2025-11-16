@@ -25,7 +25,7 @@ export class WorkflowEngine<const STEPS extends AnyWorkflowStep[] = []> {
   async run<STEP extends AvailableSteps<STEPS>>(step: STEP, input: InferWorkflowStepInput<STEP>) {
     const context = new WorkflowContext(this);
     context['startLogging']();
-    return await context['run'](step, input);
+    return await (await context['run'](step, input)).wait;
   }
 }
 

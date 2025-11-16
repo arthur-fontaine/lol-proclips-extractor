@@ -2,9 +2,8 @@ import fs from 'node:fs';
 import path from "node:path";
 import ffmpeg from 'fluent-ffmpeg';
 import { createWorkflowStep } from "../../lib/workflower/workflower.ts";
-import type { IVodFrame } from '../types/IVodFrame.ts';
-import { PICK_PREFERRED_VOD } from './09_PICK_PREFERRED_VOD.ts';
 import type { IVod } from '../types/IVod.ts';
+import type { IVodFrame } from '../types/IVodFrame.ts';
 
 export const EXTRACT_FRAME_FROM_VOD = createWorkflowStep({
   name: "EXTRACT_FRAME_FROM_VOD",
@@ -43,6 +42,6 @@ export const EXTRACT_FRAME_FROM_VOD = createWorkflowStep({
 
     // fs.unlinkSync(game.downloadedVodPath);
 
-    yield* vodFrames.map(vodFrame => ({ vodFrame }));
+    yield { vodFrames };
   },
 })

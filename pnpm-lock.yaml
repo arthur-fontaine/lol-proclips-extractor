@@ -19,6 +19,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.19.6
         version: 1.19.6(hono@4.10.6)
+      '@hono/zod-validator':
+        specifier: ^0.7.4
+        version: 0.7.4(hono@4.10.6)(zod@4.1.12)
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2))
@@ -37,6 +40,9 @@ importers:
       hono:
         specifier: ^4.10.6
         version: 4.10.6
+      hono-file-router:
+        specifier: ^0.0.5
+        version: 0.0.5
       mongodb:
         specifier: ^7.0.0
         version: 7.0.0
@@ -67,6 +73,9 @@ importers:
       ytdlp-nodejs:
         specifier: ^2.3.5
         version: 2.3.5
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.4
@@ -332,6 +341,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.7.4':
+    resolution: {integrity: sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.25.0 || ^4.0.0
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -877,6 +892,9 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  hono-file-router@0.0.5:
+    resolution: {integrity: sha512-oQj3laYyhsCN6gvAKqek7TQ3xHUfla4kjwrL5tY+QLnT/jyvQ48nCnzmpOVv9vQQOE3BKjHINuEiLjN49RXsYQ==}
+
   hono@4.10.6:
     resolution: {integrity: sha512-BIdolzGpDO9MQ4nu3AUuDwHZZ+KViNm+EZ75Ae55eMXMqLVhDFqEMXxtUe9Qh8hjL+pIna/frs2j6Y2yD5Ua/g==}
     engines: {node: '>=16.9.0'}
@@ -1276,6 +1294,9 @@ packages:
     engines: {node: '>=16.0.0'}
     hasBin: true
 
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
+
 snapshots:
 
   '@babel/helper-string-parser@7.27.1': {}
@@ -1416,6 +1437,11 @@ snapshots:
   '@hono/node-server@1.19.6(hono@4.10.6)':
     dependencies:
       hono: 4.10.6
+
+  '@hono/zod-validator@0.7.4(hono@4.10.6)(zod@4.1.12)':
+    dependencies:
+      hono: 4.10.6
+      zod: 4.1.12
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -1939,6 +1965,10 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  hono-file-router@0.0.5:
+    dependencies:
+      hono: 4.10.6
+
   hono@4.10.6: {}
 
   https-proxy-agent@7.0.6:
@@ -2256,3 +2286,5 @@ snapshots:
   yocto-queue@1.2.1: {}
 
   ytdlp-nodejs@2.3.5: {}
+
+  zod@4.1.12: {}

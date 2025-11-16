@@ -4,7 +4,7 @@ import type { IVod } from "../types/IVod.ts";
 
 export const PICK_PREFERRED_VOD = createWorkflowStep({
   name: "PICK_PREFERRED_VOD",
-  async *execute({ game }: { game: IGame.With<IGame.Aggregated & IGame.Details> }) {
+  async *execute({ game }: { game: IGame.With<IGame.Aggregated> }) {
     const vodsWithTimestamps = game.vods.filter(hasTimestamps);
 
     const preferredLocales = ["en-US", "en-GB", "en"] as const;
