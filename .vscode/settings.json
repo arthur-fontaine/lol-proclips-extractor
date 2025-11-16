@@ -3,6 +3,7 @@
 		"Database",
 		"DatabaseFeeder",
 		"VodCalibrator",
-		"Workflower"
+		"Workflower",
+		"Server"
 	]
 }
