@@ -3,8 +3,16 @@ import type { Player } from "../../external-services/database/schemas/playerSche
 import type { IGame } from "../types/IGame.ts";
 import { formatSummonerName } from "./formatSummonerName.ts";
 
-const participantDatabaseCache = new Map<number, Promise<Player>>();
+const participantDatabaseCache = new Map<string, Map<number, Promise<Player>>>();
 export async function findParticipantInDatabase(participantId: number, game: IGame.With<IGame.Aggregated>) {
+  const gameId = game.esportsGameId;
+  if (!gameId) throw new Error("Missing esportsGameId in game data.");
+
+  if (!participantDatabaseCache.has(gameId)) {
+    participantDatabaseCache.set(gameId, new Map<number, Promise<Player>>());
+  }
+  const gameCache = participantDatabaseCache.get(gameId)!;
+
   const allParticipants = [
     ...(game.gameMetadata?.blueTeamMetadata?.participantMetadata ?? []),
     ...(game.gameMetadata?.redTeamMetadata?.participantMetadata ?? []),
@@ -12,8 +20,8 @@ export async function findParticipantInDatabase(participantId: number, game: IGa
   const participant = allParticipants.find(p => p.participantId === participantId);
   if (!participant) throw new Error("Participant not found.");
 
-  if (participantDatabaseCache.has(participantId)) {
-    return participantDatabaseCache.get(participantId)!;
+  if (gameCache.has(participantId)) {
+    return gameCache.get(participantId)!;
   }
 
   const playerPromise = database.models.Player.upsert(
@@ -25,7 +33,7 @@ export async function findParticipantInDatabase(participantId: number, game: IGa
       },
     }
   );
-  participantDatabaseCache.set(participantId, playerPromise);
+  gameCache.set(participantId, playerPromise);
   const player = await playerPromise;
 
   return player;
