@@ -1,9 +1,9 @@
 export interface IVodFrame {
   path: string;
-  videoTimestamp: number;
+  videoTimestampSeconds: number;
 }
 
 export namespace IVodFrame {
   export type With<T> = Omit<IVodFrame, keyof T> & T;
-  export type GameTimestamp = { gameSeconds: number | null };
+  export type GameTimestamp = { gameTimestampSeconds: number | null };
 }

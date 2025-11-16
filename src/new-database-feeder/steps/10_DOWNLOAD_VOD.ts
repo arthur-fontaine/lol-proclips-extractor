@@ -1,7 +1,7 @@
 import path from "node:path";
 import { YtDlp } from "ytdlp-nodejs";
 import { createWorkflowStep } from "../../lib/workflower/workflower.ts";
-import { FETCH_GAME } from "./04_FETCH_GAME.ts";
+import { FETCH_GAME } from "./05_FETCH_GAME.ts";
 import type { IVod } from "../types/IVod.ts";
 
 const downloadPromises = new Map<string, Promise<string>>();
@@ -18,7 +18,7 @@ export const DOWNLOAD_VOD = createWorkflowStep({
 
       if (downloadPromises.has(youTubeId)) {
         await downloadPromises.get(youTubeId);
-        yield { vodPath: downloadedVodPath };
+        yield { vod: { ...vod, localPath: downloadedVodPath } };
         return;
       }
 
@@ -33,8 +33,9 @@ export const DOWNLOAD_VOD = createWorkflowStep({
         },
       });
       downloadPromises.set(youTubeId, downloadPromise);
+      await downloadPromise;
 
-      yield { vodPath: downloadedVodPath };
+      yield { vod: { ...vod, localPath: downloadedVodPath } };
     }
   },
   config: { concurrency: 4 },
