@@ -37,6 +37,9 @@ importers:
       papr:
         specifier: ^15.2.2
         version: 15.2.2(mongodb@7.0.0)
+      parse-duration:
+        specifier: ^2.1.4
+        version: 2.1.4
       ytdlp-nodejs:
         specifier: ^2.3.5
         version: 2.3.5
@@ -477,6 +480,9 @@ packages:
     engines: {node: '>=16.20.1'}
     peerDependencies:
       mongodb: ^6.0.0
+
+  parse-duration@2.1.4:
+    resolution: {integrity: sha512-b98m6MsCh+akxfyoz9w9dt0AlH2dfYLOBss5SdDsr9pkhKNvkWBXU/r8A4ahmIGByBOLV2+4YwfCuFxbDDaGyg==}
 
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
@@ -978,6 +984,8 @@ snapshots:
   papr@15.2.2(mongodb@7.0.0):
     dependencies:
       mongodb: 7.0.0
+
+  parse-duration@2.1.4: {}
 
   path-key@3.1.1: {}
 

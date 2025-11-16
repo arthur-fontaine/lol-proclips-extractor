@@ -3,6 +3,7 @@ import type { WorkflowContext } from "./WorkflowContext.ts";
 export abstract class WorkflowStep<INPUT, OUTPUT, CTX extends WorkflowContext<AnyWorkflowStep[]>> {
   config?: {
     concurrency?: number;
+    retryCount?: number;
     hideLogging?: boolean;
   } | undefined;
 

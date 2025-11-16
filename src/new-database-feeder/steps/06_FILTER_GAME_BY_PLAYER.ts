@@ -1,7 +1,7 @@
 import { createWorkflowStep } from "../../lib/workflower/workflower.ts";
 import type { IGame } from "../types/IGame.ts";
 import { formatSummonerName } from "../utils/formatSummonerName.ts";
-import { FETCH_GAME } from "./04_FETCH_GAME.ts";
+import { FETCH_GAME } from "./05_FETCH_GAME.ts";
 
 export const FILTER_GAME_BY_PLAYER = createWorkflowStep({
   name: "FILTER_GAME_BY_PLAYER",

@@ -3,6 +3,7 @@ import pLimit, { type LimitFunction } from "p-limit";
 import type { AvailableSteps } from "./utils/AvailableSteps.ts";
 import type { InferEngineSteps, WorkflowEngine } from "./WorkflowEngine.ts";
 import type { AnyWorkflowStep, InferWorkflowStepInput, InferWorkflowStepOutput, WorkflowStep } from "./WorkflowStep.ts";
+import { withRetry } from "../utils/withRetry.ts";
 
 export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
   private engine: WorkflowEngine<STEPS>;
@@ -64,13 +65,11 @@ export class WorkflowContext<const STEPS extends AnyWorkflowStep[] = []> {
       for (const then of thens) {
         expected++;
         const limit = that.getStepLimit(then);
-        limit(() => that.run(then, output)).finally(() => completed++);
+        const fn = step.config?.retryCount
+          ? withRetry(() => that.run(then, output), step.config.retryCount)
+          : () => that.run(then, output);
+        limit(fn).finally(() => completed++);
       }
-    }
-
-    // Wait for all tasks to complete
-    while (completed < expected) {
-      await new Promise(resolve => setTimeout(resolve, 50));
     }
 
     const total = this.totalCompleted.get(step) || 0;
