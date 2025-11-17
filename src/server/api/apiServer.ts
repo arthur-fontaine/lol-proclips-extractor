@@ -1,9 +1,10 @@
 import { serve } from "@hono/node-server";
 import { app } from "./app.ts";
+import { env } from "../../external-services/env/env.ts";
 
 const server = serve({
 	fetch: app.fetch,
-	port: 3000,
+	port: Number(env.apiPort) ?? 3000,
 });
 
 server.once("listening", () => {

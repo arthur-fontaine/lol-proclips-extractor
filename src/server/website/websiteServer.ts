@@ -2,6 +2,7 @@ import path from "node:path";
 import tailwindcssPlugin from "@tailwindcss/vite";
 import vuePlugin from "@vitejs/plugin-vue";
 import { createServer } from "vite";
+import { env } from "../../external-services/env/env.ts";
 
 export const viteServer = await createServer({
   plugins: [
@@ -11,5 +12,5 @@ export const viteServer = await createServer({
   root: path.resolve(import.meta.dirname, "./core"),
 })
 
-await viteServer.listen()
+await viteServer.listen(Number(env.websitePort) ?? 5173)
   .then(server => console.log(server.httpServer?.address()));
