@@ -3,7 +3,7 @@ import z from "zod";
 
 export const paginationValidator = zValidator(
   'query',
-  z.object({
+  z.looseObject({
     page: z.coerce.number().optional(),
     limit: z.coerce.number().max(100).optional(),
   }),

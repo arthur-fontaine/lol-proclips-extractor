@@ -28,6 +28,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2))
+      '@tanstack/vue-query':
+        specifier: ^5.91.2
+        version: 5.91.2(vue@3.5.24(typescript@5.9.3))
       '@viriato/lol-esports-api':
         specifier: ^0.6.0
         version: 0.6.0(patch_hash=2f0429d669aa387c874d13757b0963eb167abc95174531f33b313c62e65fcb45)
@@ -589,6 +592,22 @@ packages:
     resolution: {integrity: sha512-4+9w8ZHOiGnpcGI6z1TVVfWaX/koK7fKeSYF3qlYg2xpBtbteP2ddBxiarL+HVgfSJGeK5RIxRQmKm4rTJJAwA==}
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7
+
+  '@tanstack/match-sorter-utils@8.19.4':
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
+    engines: {node: '>=12'}
+
+  '@tanstack/query-core@5.90.10':
+    resolution: {integrity: sha512-EhZVFu9rl7GfRNuJLJ3Y7wtbTnENsvzp+YpcAV7kCYiXni1v8qZh++lpw4ch4rrwC0u/EZRnBHIehzCGzwXDSQ==}
+
+  '@tanstack/vue-query@5.91.2':
+    resolution: {integrity: sha512-ReppmGrVLtiWhwHnhmGJftBbVMf0BrLWtfOk6rQs0qWrhgCei1oUiLsqTCyES/zeZVqaUTmAuUpBrLwQ4DmQTQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.2
+      vue: ^2.6.0 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
 
   '@tsconfig/node-ts@23.6.1':
     resolution: {integrity: sha512-1E5cUp+S65pLKKI9VrGMQPWDHxOEq3dAGM2onG3fLeSRwWbylYFwhIjnzJikjSN7w2nCgwxmv8ifvUKDFkK38Q==}
@@ -1180,6 +1199,9 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
+
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
@@ -1299,6 +1321,17 @@ packages:
       tsx:
         optional: true
       yaml:
+        optional: true
+
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
         optional: true
 
   vue-router@4.6.3:
@@ -1692,6 +1725,20 @@ snapshots:
       '@tailwindcss/oxide': 4.1.17
       tailwindcss: 4.1.17
       vite: 7.2.2(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)
+
+  '@tanstack/match-sorter-utils@8.19.4':
+    dependencies:
+      remove-accents: 0.5.0
+
+  '@tanstack/query-core@5.90.10': {}
+
+  '@tanstack/vue-query@5.91.2(vue@3.5.24(typescript@5.9.3))':
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.19.4
+      '@tanstack/query-core': 5.90.10
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.24(typescript@5.9.3)
+      vue-demi: 0.14.10(vue@3.5.24(typescript@5.9.3))
 
   '@tsconfig/node-ts@23.6.1': {}
 
@@ -2274,6 +2321,8 @@ snapshots:
 
   punycode@2.3.1: {}
 
+  remove-accents@0.5.0: {}
+
   rfdc@1.4.1: {}
 
   rimraf@5.0.10:
@@ -2380,6 +2429,10 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       lightningcss: 1.30.2
+
+  vue-demi@0.14.10(vue@3.5.24(typescript@5.9.3)):
+    dependencies:
+      vue: 3.5.24(typescript@5.9.3)
 
   vue-router@4.6.3(vue@3.5.24(typescript@5.9.3)):
     dependencies:

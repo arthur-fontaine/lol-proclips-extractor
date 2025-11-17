@@ -5,7 +5,8 @@
 		"@tsconfig/node-ts/tsconfig.json"
 	],
 	"compilerOptions": {
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator", "DOM"],
 	},
 	"exclude": ["dist", "coverage", "node_modules"]
 }

@@ -6,13 +6,13 @@ import { paginationValidator } from '../utils/paginationValidator.ts';
 
 export const listPlayersHandler = new Hono().get(
   "/",
-  paginationValidator,
   zValidator(
     'query',
     z.object({
       summonerName: z.string().optional(),
     }),
   ),
+  paginationValidator,
   async (c) => {
     const { limit = 20, page = 1, ...query } = c.req.valid('query');
 

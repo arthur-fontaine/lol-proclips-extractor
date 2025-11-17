@@ -7,17 +7,17 @@ import { paginationValidator } from '../../utils/paginationValidator.ts';
 
 export const listPlayerEventsHandler = new Hono().get(
   "/",
+  zValidator(
+    'query',
+    z.object({
+      type: z.enum(['kill', 'death', 'assist']).optional(),
+    }),
+  ),
   paginationValidator,
   zValidator(
     'param',
     z.object({
       playerId: z.string(),
-    }),
-  ),
-  zValidator(
-    'query',
-    z.object({
-      type: z.enum(['kill', 'death', 'assist']).optional(),
     }),
   ),
   async (c) => {

@@ -1,1 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Unica+One&display=swap');
 @import "tailwindcss" source("..");
+
+@theme {
+  --color-*: initial;
+
+  /* Colors */
+  --color-midnight: hsl(220, 67%, 4%);
+  --color-midnight-glow: #0f2a45;
+  --color-aurum: #eddc91;
+  --color-hextech: #548cb4;
+  --color-gold: #c4a15b;
+
+  /* Semantic Colors */
+  --color-title: var(--color-aurum);
+  --color-muted: #9fb4d7;
+  --color-text: #FFFFD9;
+  --color-card-background: color-mix(in srgb, #0c1624 85%, transparent);
+  --color-border: #1f2c3f;
+  --color-button-background: color-mix(in srgb, #1a2a3e 75%, transparent);
+  --color-button-text: var(--color-aurum);
+  --color-input-background: color-mix(in srgb, #1a2a3e 85%, transparent);
+
+  /* Fonts */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-display: "Unica One", "Cinzel", serif;
+}
+
+@layer base {
+  body {
+    background-image: radial-gradient(
+        circle at 20% 20%,
+        color-mix(in srgb, var(--color-hextech) 30%, transparent) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 80% 0%,
+        color-mix(in srgb, var(--color-gold) 22%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at 50% 120%,
+        color-mix(in srgb, var(--color-midnight-glow) 80%, transparent) 0%,
+        transparent 70%
+      ),
+      linear-gradient(180deg, #050b15 0%, var(--color-midnight) 55%, var(--color-midnight) 100%);
+    overflow: hidden;
+  }
+}
