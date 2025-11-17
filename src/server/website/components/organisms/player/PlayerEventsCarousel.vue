@@ -46,12 +46,12 @@ function changeEventType(newType: string) {
 
 <template>
   <div class="flex flex-col">
-    <div v-if="playerEvents" class="flex gap-4">
+    <div v-if="playerEvents" class="flex gap-4 flex-col lg:flex-row">
       <div class="flex-1">
         <PlayerEvent v-if="playerEvent" :event="playerEvent" :clipMarginSeconds="CLIP_MARGIN_SECONDS" />
       </div>
 
-      <div class="shrink max-w-64 flex flex-col gap-2">
+      <div class="shrink w-full lg:max-w-64 flex flex-col gap-2">
         <div class="flex bg-card-background w-full border border-border rounded-2xl">
           <Button v-for="{ type, label } in [
             { type: 'kill', label: 'Kills' },
@@ -63,11 +63,11 @@ function changeEventType(newType: string) {
           </Button>
         </div>
 
-        <div class="bg-card-background p-4 border border-border rounded-2xl flex flex-col shrink max-w-64 flex-1">
+        <div class="bg-card-background p-4 border border-border rounded-2xl flex flex-col shrink w-full flex-1">
           <VodInfo v-if="playerEvent" :event="playerEvent" />
           <PlayerEventController @next="goToNextEvent" @previous="goToPreviousEvent"
             :currentEventIndex="playerEventsIndex"
-            :totalEvents="playerEventsPagination?.total ?? 0" class="mt-auto" />
+            :totalEvents="playerEventsPagination?.total ?? 0" class="mt-auto pt-8" />
         </div>
       </div>
     </div>
