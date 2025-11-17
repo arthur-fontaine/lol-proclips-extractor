@@ -10,6 +10,10 @@ export const viteServer = await createServer({
     tailwindcssPlugin(),
   ],
   root: path.resolve(import.meta.dirname, "./core"),
+  server: {
+    host: true,
+    allowedHosts: ["lol-esports-clips.arthurfontaine.fr"],
+  },
 })
 
 await viteServer.listen(Number(env.websitePort) ?? 5173)
