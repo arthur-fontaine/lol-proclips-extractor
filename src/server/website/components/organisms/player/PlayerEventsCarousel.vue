@@ -7,24 +7,27 @@ import { CLIP_MARGIN_SECONDS } from '../../../lib/constants';
 import PlayerEventController from '../../molecules/PlayerEventController.vue';
 import { preloadVod } from '../../../lib/utils/preloadVod';
 import Button from '../../atoms/Button.vue';
+import { usePlayerEventControllerStore } from '../../../composables/stores/usePlayerEventControllerStore';
 
 const props = defineProps<{
   playerId: string
 }>()
 
+const playerEventControllerStore = usePlayerEventControllerStore().getPlayerStore(props.playerId);
+
 const eventType = ref('kill');
 const { data: playerEvents, pagination: playerEventsPagination, fetchNextPage: loadMorePlayerEvents } = usePlayerEvents(props.playerId, eventType);
-const playerEventsIndex = ref(0);
+const playerEventsIndex = playerEventControllerStore.getRef();
 
 const playerEvent = computed(() => playerEvents.value[playerEventsIndex.value]);
 
 function goToPreviousEvent() {
-  playerEventsIndex.value = Math.max(0, playerEventsIndex.value - 1);
+  playerEventControllerStore.set(Math.max(0, playerEventsIndex.value - 1));
 }
 
 function goToNextEvent() {
-  playerEventsIndex.value = Math.min(playerEvents.value.length - 1, playerEventsIndex.value + 1);
-  if (playerEventsIndex.value === playerEvents.value.length - 2) {
+  playerEventControllerStore.set(Math.min(playerEvents.value.length - 1, playerEventsIndex.value + 1));
+  if (playerEventsIndex.value >= playerEvents.value.length - 2) {
     void loadMorePlayerEvents();
   }
 }
@@ -40,7 +43,7 @@ effect(() => {
 
 function changeEventType(newType: string) {
   eventType.value = newType;
-  playerEventsIndex.value = 0;
+  playerEventControllerStore.set(0);
 }
 </script>
 

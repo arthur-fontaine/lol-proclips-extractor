@@ -1,31 +1,11 @@
 import { computed, effect, onMounted, watch, type Ref } from "vue"
 import { api } from "../../lib/api.ts"
 import { useInfiniteQuery } from "@tanstack/vue-query"
+import { usePlayerEventControllerStore } from "../stores/usePlayerEventControllerStore.ts";
 
 export const usePlayerEvents = (playerId: string, type?: Ref<string>) => {
-  // const query = useInfiniteQuery({
-  //   key: computed(() => {
-  //     console.log('computing key with type:', type?.value)
-  //     console.log('->', ['players', playerId, 'events', type?.value ?? 'all'])
-  //     return ['players', playerId, 'events', type?.value ?? 'all'];
-  //   }),
-  //   query: async (lastPage) =>
-  //     (lastPage === null || (lastPage.pagination.page * lastPage.pagination.limit < lastPage.pagination.total))
-  //       ? api.v1.players[":playerId"].events.$get({
-  //         param: { playerId },
-  //         query: {
-  //           ...(type ? { type: type.value } : {}),
-  //           page: ((lastPage?.pagination.page ?? 0) + 1).toString(),
-  //           limit: '20',
-  //         },
-  //       }).then(req => req.json()) : null,
-  //   initialPage: null as Awaited<ReturnType<Awaited<ReturnType<typeof api.v1.players[":playerId"]["events"]["$get"]>>['json']>> | null,
-  //   merge: (pages, newPage) => ({
-  //     ...pages!,
-  //     ...newPage,
-  //     events: [...pages?.events ?? [], ...newPage!.events],
-  //   }),
-  // })
+  const playerEventControllerStore = usePlayerEventControllerStore().getPlayerStore(playerId);
+  const initialIndex = playerEventControllerStore.getRef().value || 0;
 
   const query = useInfiniteQuery({
     queryKey: ['players', playerId, 'events', type ?? 'all'],
@@ -34,15 +14,23 @@ export const usePlayerEvents = (playerId: string, type?: Ref<string>) => {
         param: { playerId },
         query: {
           ...(type ? { type: type.value } : {}),
-          page: pageParam.toString(),
-          limit: '20',
+          page: pageParam.page.toString(),
+          limit: pageParam.limit.toString(),
         },
       }).then(req => req.json()),
-    initialPageParam: 1,
+    initialPageParam: {
+      page: 1,
+      limit: Math.max(initialIndex + 1, 20),
+    },
     getNextPageParam: (lastPage, allPages) => {
       const pagination = lastPage?.pagination;
       if (pagination && pagination.page * pagination.limit < pagination.total) {
-        return allPages.length + 1
+        const totalEventsLoaded = allPages.reduce((acc, page) => acc + (page?.events.length || 0), 0);
+        const limit = 20;
+        return {
+          page: Math.floor(totalEventsLoaded / limit) + 1,
+          limit: limit,
+        }
       }
       return undefined
     },
